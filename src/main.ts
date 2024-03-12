@@ -1,10 +1,12 @@
 /* eslint-disable import/order */
 import '@/@iconify/icons-bundle'
 import App from '@/App.vue'
+import LoginPage from './pages/Admin/login.vue'
 import layoutsPlugin from '@/plugins/layouts'
 import vuetify from '@/plugins/vuetify'
 import { loadFonts } from '@/plugins/webfontloader'
 import router from '@/router'
+import loginPageRouter from './router/login/loginPage'
 import '@core/scss/template/index.scss'
 import '@styles/styles.scss'
 import { createPinia } from 'pinia'
@@ -25,3 +27,10 @@ app.use(Toast)
 
 // Mount vue app
 app.mount('#app')
+
+const loginPage = createApp(LoginPage)
+loginPage.use(vuetify)
+loginPage.use(loginPageRouter)
+loginPage.use(Toast)
+
+loginPage.mount('#loginPage')

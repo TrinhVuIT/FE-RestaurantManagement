@@ -19,7 +19,7 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
 const isPasswordVisible = ref(false)
 
 const refVForm = ref<VForm>()
-const email = ref('admin@demo.com')
+const username = ref('admin')
 const password = ref('admin')
 const rememberMe = ref(false)
 </script>
@@ -66,7 +66,7 @@ const rememberMe = ref(false)
           />
 
           <h5 class="text-h5 mb-1">
-            Welcome to <span class="text-capitalize"> {{ themeConfig.app.title }} </span>! 👋🏻
+            Welcome to <span class="text-capitalize"> {{ themeConfig.app.title }} </span>
           </h5>
 
           <p class="mb-0">
@@ -80,11 +80,11 @@ const rememberMe = ref(false)
             variant="tonal"
           >
             <p class="text-caption mb-2">
-              Admin Email: <strong>admin@demo.com</strong> / Pass: <strong>admin</strong>
+              Admin UserName: <strong>admin</strong> / Pass: <strong>admin</strong>
             </p>
 
             <p class="text-caption mb-0">
-              Client Email: <strong>client@demo.com</strong> / Pass: <strong>client</strong>
+              Client UserName: <strong>client</strong> / Pass: <strong>client</strong>
             </p>
           </VAlert>
         </VCardText>
@@ -98,9 +98,9 @@ const rememberMe = ref(false)
               <!-- email -->
               <VCol cols="12">
                 <AppTextField
-                  v-model="email"
-                  label="Email"
-                  type="email"
+                  v-model="username"
+                  label="UserName"
+                  type="username"
                   autofocus
                 />
               </VCol>
