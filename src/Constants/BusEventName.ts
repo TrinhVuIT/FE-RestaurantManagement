@@ -1,0 +1,3 @@
+enum BusEventName {
+  OnFilterIconClicked = 'OnFilterIconClicked'
+}
