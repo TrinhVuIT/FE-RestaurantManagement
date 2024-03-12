@@ -8,9 +8,6 @@ const router = createRouter({
     ...setupLayouts(routes),
   ],
 })
-
-console.log(router) // By pass convention
-
 // Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 
 export default router

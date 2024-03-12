@@ -12,7 +12,6 @@ import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { themeConfig } from "@themeConfig";
 import LoginService from "@/services/AuthServices";
 import { useToast } from "vue-toastification";
-import {useDisplay} from "vuetify";
 import { enc, AES } from 'crypto-js';
 
 const authThemeImg = useGenerateImageVariant(
@@ -39,7 +38,7 @@ const onSubmitClicked = async () => {
   loading.value = true;
   let param = {
     username: username.value,
-    password: password.value.toLowerCase(),
+    password: password.value,
   };
   await LoginService.Login(param)
     .then((res) => {
@@ -50,7 +49,7 @@ const onSubmitClicked = async () => {
         if(rememberMe && rememberMe.value){
           const dataRememberMe = {
             rememberme: rememberMe.value,
-            password: password.value.toLowerCase(),
+            password: password.value,
             username: username.value
           };
           const encryptedPassword = AES.encrypt(dataRememberMe.password, cvsecretKey.value).toString();
@@ -60,7 +59,7 @@ const onSubmitClicked = async () => {
           localStorage.removeItem('cvrememberme');
         }
 
-        router.push({ path: "/" });
+        router.push({ path: "/admin/khoahocpage" });
       } else {
         toast.error("Login unsuccessful. Please try again");
       }
