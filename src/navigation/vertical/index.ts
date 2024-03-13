@@ -17,10 +17,5 @@ export default [
     title: 'Biểu đồ',
     to: { path: `${PATH_PREFIX}/bieudopage` },
     icon: { icon: 'tabler-file' },
-  },
-  {
-    title: 'ChiTiet',
-    to: { path: `${PATH_PREFIX}/chitietpage` },
-    icon: { icon: 'tabler-file' },
-  },
+  }
 ] as VerticalNavItems

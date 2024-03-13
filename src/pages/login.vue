@@ -42,7 +42,7 @@ const onSubmitClicked = async () => {
     password: password.value,
   };
   const res = await LoginService.Login(param);
-  
+
   if (res.success === true) {
     localStorage.setItem("accessToken", res.data.accessToken);
     localStorage.setItem("refreshToken", res.data.refreshToken);
@@ -73,6 +73,11 @@ const onSubmitClicked = async () => {
 const onSubmit = async () => {
   await onSubmitClicked();
 };
+
+const onRegisterClicked = () => {
+  router.push({ path: "/register" });
+};
+
 onMounted(() => {
   const dataRememberMe = JSON.parse(localStorage.getItem("cvrememberme")!);
   if (dataRememberMe && dataRememberMe?.username) {
@@ -183,7 +188,12 @@ onMounted(() => {
               <VCol cols="12" class="text-center">
                 <span>New on our platform?</span>
 
-                <a class="text-primary ms-2" href="#"> Create an account </a>
+                <RouterLink
+                  class="text-primary ms-2"
+                  :to="{ name: 'register' }"
+                >
+                  Create an account
+                </RouterLink>
               </VCol>
 
               <VCol cols="12" class="d-flex align-center">
