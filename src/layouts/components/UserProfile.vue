@@ -1,5 +1,23 @@
 <script setup lang="ts">
 import avatar1 from '@images/avatars/avatar-1.png'
+import AuthService from "@/services/AuthServices";
+import { useToast } from "vue-toastification";
+
+const router = useRouter();
+const toast = useToast();
+
+const onLogoutClicked = async () => {
+  await AuthService.Logout().then((res) => {
+    if (res.success === true) {
+      router.push({ path: "/admin/login" });
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      toast.success("Logout Success");
+    } else {
+      toast.error("Logout Unsuccessful");
+    }
+  });
+};
 </script>
 
 <template>
@@ -111,7 +129,7 @@ import avatar1 from '@images/avatars/avatar-1.png'
           <VDivider class="my-2" />
 
           <!-- 👉 Logout -->
-          <VListItem to="/admin/login">
+          <VListItem @click="onLogoutClicked">
             <template #prepend>
               <VIcon
                 class="me-2"
