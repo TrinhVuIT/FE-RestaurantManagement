@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 //bảng 1
 import ApexChartAreaChart from "./ApexChartAreaChart.vue";
 //bảng 4

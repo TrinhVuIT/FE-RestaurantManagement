@@ -34,15 +34,8 @@
       </div>
     </div>
   </div>
-  <div id="loginPage"></div>
   <script type="module" src="/src/main.ts"></script>
   <script>
-    const currentRoute = window.location.href
-    if (currentRoute.includes('/admin/')) {
-      window.document.getElementById('loginPage').style.display = 'none'
-    } else {
-      window.document.getElementById('app').style.display = 'none'
-    }
     const loaderColor = localStorage.getItem('vuexy-initial-loader-bg') || '#FFFFFF'
     const primaryColor = localStorage.getItem('vuexy-initial-loader-color') || '#7367F0'
 

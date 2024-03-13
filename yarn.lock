@@ -340,6 +340,11 @@
   resolved "https://registry.npmjs.org/@casl/vue/-/vue-2.2.1.tgz"
   integrity sha512-1OeGhT4A7VBkEACacF2ZlHkPiFJvyFy9h2PhBnMoetFDojMHbrn3ZjKgL5zQ4wSIrTQo9KbbzG3f0uAei2GKCQ==
 
+"@ckeditor/ckeditor5-vue@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-vue/-/ckeditor5-vue-5.1.0.tgz"
+  integrity sha512-KEx4Tj2Irr4ZbLG8LnaKpb0Dgd8qmLmKFWeiKkQwM3RAAeYRYOCcBVB2Y168I9KA8wRosPxgOO9jbQ92yopYHA==
+
 "@csstools/selector-specificity@^2.0.2":
   version "2.2.0"
   resolved "https://registry.npmjs.org/@csstools/selector-specificity/-/selector-specificity-2.2.0.tgz"
@@ -3700,6 +3705,11 @@ minizlib@^2.1.1:
     minipass "^3.0.0"
     yallist "^4.0.0"
 
+mitt@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/mitt/-/mitt-3.0.1.tgz"
+  integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
+
 mkdirp@^1.0.3:
   version "1.0.4"
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
@@ -4036,7 +4046,12 @@ pify@^2.3.0:
   resolved "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
 
-pinia@2.0.35:
+pinia-plugin-persistedstate@^3.2.0:
+  version "3.2.1"
+  resolved "https://registry.npmjs.org/pinia-plugin-persistedstate/-/pinia-plugin-persistedstate-3.2.1.tgz"
+  integrity sha512-MK++8LRUsGF7r45PjBFES82ISnPzyO6IZx3CH5vyPseFLZCk1g2kgx6l/nW8pEBKxxd4do0P6bJw+mUSZIEZUQ==
+
+pinia@^2.0.0, pinia@2.0.35:
   version "2.0.35"
   resolved "https://registry.npmjs.org/pinia/-/pinia-2.0.35.tgz"
   integrity sha512-P1IKKQWhxGXiiZ3atOaNI75bYlFUbRxtJdhPLX059Z7+b9Z04rnTZdSY8Aph1LA+/4QEMAYHsTQ638Wfe+6K5g==

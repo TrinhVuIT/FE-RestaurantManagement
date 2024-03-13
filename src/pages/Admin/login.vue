@@ -12,7 +12,7 @@ import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { themeConfig } from "@themeConfig";
 import LoginService from "@/services/AuthServices";
 import { useToast } from "vue-toastification";
-import { enc, AES } from 'crypto-js';
+import { enc, AES } from "crypto-js";
 
 const authThemeImg = useGenerateImageVariant(
   authV2LoginIllustrationLight,
@@ -30,7 +30,6 @@ const username = ref("PhuongTrinh");
 const password = ref("123@123");
 const rememberMe = ref(false);
 let cvsecretKey = ref("secretKey_cv");
-const errors = ref<any>([]);
 const router = useRouter();
 const toast = useToast();
 
@@ -40,56 +39,51 @@ const onSubmitClicked = async () => {
     username: username.value,
     password: password.value,
   };
-  await LoginService.Login(param)
-    .then((res) => {
-      if (res.success === true) {
-        localStorage.setItem("accessToken", res.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.refreshToken);
+  const res = await LoginService.Login(param);
+  
+  if (res.success === true) {
+    localStorage.setItem("accessToken", res.data.accessToken);
+    localStorage.setItem("refreshToken", res.data.refreshToken);
 
-        if(rememberMe && rememberMe.value){
-          const dataRememberMe = {
-            rememberme: rememberMe.value,
-            password: password.value,
-            username: username.value
-          };
-          const encryptedPassword = AES.encrypt(dataRememberMe.password, cvsecretKey.value).toString();
-          dataRememberMe.password = encryptedPassword;
-          localStorage.setItem('cvrememberme', JSON.stringify(dataRememberMe));
-        }else{
-          localStorage.removeItem('cvrememberme');
-        }
+    if (rememberMe && rememberMe.value) {
+      const dataRememberMe = {
+        rememberme: rememberMe.value,
+        password: password.value,
+        username: username.value,
+      };
+      const encryptedPassword = AES.encrypt(
+        dataRememberMe.password,
+        cvsecretKey.value
+      ).toString();
+      dataRememberMe.password = encryptedPassword;
+      localStorage.setItem("cvrememberme", JSON.stringify(dataRememberMe));
+    } else {
+      localStorage.removeItem("cvrememberme");
+    }
 
-        router.push({ path: "/admin/khoahocpage" });
-      } else {
-        toast.error("Login unsuccessful. Please try again");
-      }
-    })
-    .catch((error) => {
-
-      errors.value = error?.response?.data?.errors;
-    });
-
-    loading.value = false
+    router.push({ path: "/admin/bieudopage" });
+  } else {
+    toast.error("Login unsuccessful. Please try again");
+  }
+  loading.value = false;
 };
 
 const onSubmit = async () => {
-  refVForm.value?.validate()
-    .then(async ({valid: isValid}) => {
-      if (isValid) {
-        await onSubmitClicked();
-      }
-    })
-}
+  await onSubmitClicked();
+};
 onMounted(() => {
-  const dataRememberMe = JSON.parse(localStorage.getItem('cvrememberme'));
-  if(dataRememberMe && dataRememberMe?.username){
+  const dataRememberMe = JSON.parse(localStorage.getItem("cvrememberme")!);
+  if (dataRememberMe && dataRememberMe?.username) {
     username.value = dataRememberMe?.username;
   }
-  if(dataRememberMe && dataRememberMe.password){
-    const decryptedPassword = AES.decrypt(dataRememberMe?.password, cvsecretKey.value).toString(enc.Utf8);
+  if (dataRememberMe && dataRememberMe.password) {
+    const decryptedPassword = AES.decrypt(
+      dataRememberMe?.password,
+      cvsecretKey.value
+    ).toString(enc.Utf8);
     password.value = decryptedPassword;
   }
-  if(dataRememberMe && dataRememberMe.rememberme){
+  if (dataRememberMe && dataRememberMe.rememberme) {
     rememberMe.value = dataRememberMe?.rememberme;
   }
 });
@@ -145,7 +139,7 @@ onMounted(() => {
         </VCardText>
 
         <VCardText>
-          <VForm ref="refVForm" @submit="() => {}">
+          <VForm ref="refVForm">
             <VRow>
               <!-- email -->
               <VCol cols="12">
@@ -154,6 +148,7 @@ onMounted(() => {
                   label="UserName"
                   type="username"
                   autofocus
+                  @keyup.enter="onSubmit"
                 />
               </VCol>
 
@@ -167,6 +162,7 @@ onMounted(() => {
                     isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'
                   "
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                  @keyup.enter="onSubmit"
                 />
 
                 <div
@@ -178,9 +174,7 @@ onMounted(() => {
                   </a>
                 </div>
 
-                <VBtn block type="submit" :loading="loading" @click="onSubmit">
-                  Login
-                </VBtn>
+                <VBtn block :loading="loading" @click="onSubmit"> Login </VBtn>
               </VCol>
 
               <!-- create account -->
