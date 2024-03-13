@@ -176,11 +176,13 @@ onMounted(() => {
                   class="d-flex align-center flex-wrap justify-space-between mt-2 mb-4"
                 >
                   <VCheckbox v-model="rememberMe" label="Remember me" />
-                  <a class="text-primary ms-2 mb-1" href="#">
+                  <RouterLink
+                    class="text-primary ms-2 mb-1"
+                    :to="{ name: 'forgot-password' }"
+                  >
                     Forgot Password?
-                  </a>
+                  </RouterLink>
                 </div>
-
                 <VBtn block :loading="loading" @click="onSubmit"> Login </VBtn>
               </VCol>
 
