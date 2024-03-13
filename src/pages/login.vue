@@ -13,6 +13,8 @@ import { themeConfig } from "@themeConfig";
 import LoginService from "@/services/AuthServices";
 import { useToast } from "vue-toastification";
 import { enc, AES } from "crypto-js";
+import { useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
 
 const authThemeImg = useGenerateImageVariant(
   authV2LoginIllustrationLight,

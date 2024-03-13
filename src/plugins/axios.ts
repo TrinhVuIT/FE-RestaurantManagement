@@ -43,7 +43,7 @@ axiosIns.interceptors.response.use(
     // Handle error
     if (error.response.status === 401) {
       if (!localStorage.getItem("refreshToken")) {
-        router.push("/admin/login");
+        router.push("/login");
       } else {
         const res = await LoginService.RefreshToken();
         if (res.success === true) {
@@ -61,7 +61,7 @@ axiosIns.interceptors.response.use(
           localStorage.removeItem("refreshToken");
 
           // If 401 response returned from api
-          router.push("/admin/login");
+          router.push("/login");
         }
       }
     } else {

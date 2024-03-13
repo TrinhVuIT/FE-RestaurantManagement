@@ -2,6 +2,7 @@
 import avatar1 from '@images/avatars/avatar-1.png'
 import AuthService from "@/services/AuthServices";
 import { useToast } from "vue-toastification";
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const toast = useToast();
@@ -9,7 +10,7 @@ const toast = useToast();
 const onLogoutClicked = async () => {
   await AuthService.Logout().then((res) => {
     if (res.success === true) {
-      router.push({ path: "/admin/login" });
+      router.push({ path: "/login" });
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       toast.success("Logout Success");

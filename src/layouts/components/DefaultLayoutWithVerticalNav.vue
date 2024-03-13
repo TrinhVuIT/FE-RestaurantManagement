@@ -10,6 +10,9 @@ import AdminPageName from '@/Constants/AdminPageName'
 
 // @layouts plugin
 import { VerticalNavLayout } from '@layouts'
+import { useWindowSize } from '@vueuse/core'
+import { useRoute } from 'vue-router'
+import { onMounted, ref, watch } from 'vue'
 
 const { appRouteTransition, isLessThanOverlayNavBreakpoint } = useThemeConfig()
 const { width: windowWidth } = useWindowSize()
