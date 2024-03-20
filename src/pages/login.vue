@@ -15,6 +15,7 @@ import { useToast } from "vue-toastification";
 import { enc, AES } from "crypto-js";
 import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
+import { passwordValidator, requiredValidator } from "@validators";
 
 const authThemeImg = useGenerateImageVariant(
   authV2LoginIllustrationLight,
@@ -71,11 +72,11 @@ const onSubmitClicked = async () => {
 };
 
 const onSubmit = async () => {
-  await onSubmitClicked();
-};
-
-const onRegisterClicked = () => {
-  router.push({ path: "/register" });
+  refVForm.value?.validate().then(async ({ valid: isValid }) => {
+    if (isValid) {
+      await onSubmitClicked();
+    }
+  });
 };
 
 onMounted(() => {
@@ -155,6 +156,7 @@ onMounted(() => {
                   label="UserName"
                   type="username"
                   autofocus
+                  :rules="[requiredValidator]"
                   @keyup.enter="onSubmit"
                 />
               </VCol>
@@ -168,6 +170,7 @@ onMounted(() => {
                   :append-inner-icon="
                     isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'
                   "
+                  :rules="[requiredValidator, passwordValidator]"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
                   @keyup.enter="onSubmit"
                 />

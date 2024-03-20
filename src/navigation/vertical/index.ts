@@ -1,21 +1,31 @@
-import type { VerticalNavItems } from '@/@layouts/types'
+import type { VerticalNavItems } from "@/@layouts/types";
 
-const PATH_PREFIX = '/admin'
+const PATH_PREFIX = "/trangchu";
 
 export default [
   {
-    title: 'Sample page',
-    to: { path: `${PATH_PREFIX}/samplepage` },
-    icon: { icon: 'tabler-file' },
-  },
-  {
-    title: 'Khóa học',
-    to: { path: `${PATH_PREFIX}/khoahocpage` },
-    icon: { icon: 'tabler-file' },
-  },
-  {
-    title: 'Biểu đồ',
+    title: "Trang Chủ",
     to: { path: `${PATH_PREFIX}/bieudopage` },
-    icon: { icon: 'tabler-file' },
-  }
-] as VerticalNavItems
+    icon: { icon: "tabler-home" },
+  },
+  {
+    title: "Thực Đơn",
+    to: { path: `${PATH_PREFIX}/bieudopage` },
+    icon: { icon: "tabler-file-description" },
+  },
+  {
+    title: "Giới Thiệu",
+    to: { path: `${PATH_PREFIX}/bieudopage` },
+    icon: { icon: "tabler-pencil-check" },
+  },
+  {
+    title: "Đặt Món",
+    to: { path: `${PATH_PREFIX}/bieudopage` },
+    icon: { icon: "tabler-file-check" },
+  },
+  {
+    title: "Liên Hệ",
+    to: { path: `${PATH_PREFIX}/bieudopage` },
+    icon: { icon: "tabler-user-plus" },
+  },
+] as VerticalNavItems;
