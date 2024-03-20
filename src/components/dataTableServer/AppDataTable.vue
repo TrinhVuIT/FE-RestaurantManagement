@@ -106,44 +106,53 @@ watch(props.paramsRequestModel, async () => {
   await reload();
 });
 
-watch(() => keyword.value, async () => {
-  clearTimeout(time.value)
-  time.value = setTimeout(async () => {
-    await reload();
-  }, 500)
-})
+watch(
+  () => keyword.value,
+  async () => {
+    clearTimeout(time.value);
+    time.value = setTimeout(async () => {
+      await reload();
+    }, 500);
+  }
+);
 
-watch(() => workingItem.value.pageNo, async () => await loadData())
-watch(() => drawer.value.show, () => {
-  if (!drawer.value.show) navigationItem.value = {}
-})
+watch(
+  () => workingItem.value.pageNo,
+  async () => await loadData()
+);
+watch(
+  () => drawer.value.show,
+  () => {
+    if (!drawer.value.show) navigationItem.value = {};
+  }
+);
 
-const onClickEditNavigation = ()=>{
-  const elm = document.getElementById('id-edit-' + navigationItem.value?.id)
-  elm?.click()
-  drawer.value.show = false
-}
+const onClickEditNavigation = () => {
+  const elm = document.getElementById("id-edit-" + navigationItem.value?.id);
+  elm?.click();
+  drawer.value.show = false;
+};
 
-const onClickRow = (_, {item}: any)=>{
-  if(!props.clickRow) return
+const onClickRow = (_, { item }: any) => {
+  if (!props.clickRow) return;
 
-  drawer.value.show = true
-  navigationItem.value = item.raw
-}
+  drawer.value.show = true;
+  navigationItem.value = item.raw;
+};
 
-const onCloseNavigationClick = ()=>{
-  drawer.value.show = false
-}
+const onCloseNavigationClick = () => {
+  drawer.value.show = false;
+};
 
 const sortList = async (e: any) => {
-  workingItem.value.sortBy = e
+  workingItem.value.sortBy = e;
   await reload();
-}
+};
 
 const reload = async () => {
-  workingItem.value.pageNo = 1
-  await loadData()
-}
+  workingItem.value.pageNo = 1;
+  await loadData();
+};
 
 const loadData = async () => {
   loading.value = true;
@@ -156,13 +165,13 @@ const loadData = async () => {
     order: workingItem.value.sortBy?.[0]?.order,
   };
 
-  if (keyword.value) params.keyword = keyword.value
+  if (keyword.value) params.keyword = keyword.value;
 
   Object.keys(params).forEach((i) => {
     if (!params[i]) delete params[i];
   });
 
-  const res = await props.services.getAll(params)
+  const res = await props.services.getAll(params);
   if (res) {
     Object.assign(workingItem.value, res);
   }
@@ -170,15 +179,226 @@ const loadData = async () => {
 };
 
 const onDeleteClicked = async (id: number) => {
-  const res = await props.services.delete(id)
-  if (res) toast.success(props.deleteDialog?.massegeSuccess || '')
-  else toast.error(props.deleteDialog?.massegeError || '')
-  await reload()
-}
+  const res = await props.services.delete(id);
+  if (res) toast.success(props.deleteDialog?.massegeSuccess || "");
+  else toast.error(props.deleteDialog?.massegeError || "");
+  await reload();
+};
 </script>
 
 <template>
-  
+  <v-card>
+    <div class="bavang-title px-6 pt-6">
+      {{ titleTable }}
+    </div>
+
+    <!-- 👉 slot top-->
+    <slot name="top">
+      <v-row class="mx-3 my-2">
+        <v-col cols="12" md="10">
+          <v-row>
+            <!-- 👉 slot filter top-->
+            <slot name="filterTop" v-bind="{ reload }">
+              <v-col cols="12" sm="3">
+                <AppTextField
+                  prepend-inner-icon="tabler-search"
+                  clearable
+                  v-model="keyword"
+                  :placeholder="placeholderSearch"
+                />
+              </v-col>
+
+              <!-- 👉 slot filter Top Append-->
+              <slot name="filterTopAppend" v-bind="{ reload }" />
+            </slot>
+
+            <!-- 👉 slot filter bottom-->
+            <slot name="filterBottom" v-bind="{ reload }" />
+
+            <v-spacer />
+          </v-row>
+        </v-col>
+        <v-col cols="12" md="2">
+          <!-- 👉 slot action Top-->
+          <slot name="actionTop" v-bind="{ reload }">
+            <div class="d-flex justify-end gap-x-2 gap-y-3">
+              <!-- 👉 slot action top prepend-->
+              <slot name="actionTopPrepend" v-bind="{ reload }" />
+
+              <!-- 👉 slot selected-->
+              <slot name="actionTopSelect" v-bind="{ selected }" />
+
+              <!-- 👉 slot action create-->
+              <slot name="actionCreate" v-bind="{ reload }">
+                <app-add-or-edit-dialog
+                  width="600"
+                  v-bind="$props.createDialog"
+                  :service="services.create"
+                  :reload="reload"
+                >
+                  <template #activator="props">
+                    <v-btn v-bind="props">
+                      {{ createDialog?.actionBtn || "Them moi" }}
+                    </v-btn>
+                  </template>
+                  <template #form="{ data }">
+                    <!-- 👉 slot addOrEditForm-->
+                    <slot name="addOrEditForm" v-bind="{ item: {}, data }" />
+                  </template>
+
+                  <!-- 👉 slot action Dialog Mid-->
+                  <template #actionDialogMid="{ isActive, clearData }">
+                    <slot
+                      name="actionDialogMid"
+                      v-bind="{ isActive, clearData, reload }"
+                    />
+                  </template>
+                </app-add-or-edit-dialog>
+              </slot>
+
+              <!-- 👉 slot action top append-->
+              <slot name="actionTopAppend" v-bind="{ reload }" />
+            </div>
+          </slot>
+        </v-col>
+
+        <!-- 👉 slot filter bottom-->
+        <slot name="filterBottom" v-bind="{ reload }" />
+      </v-row>
+
+      <v-divider />
+    </slot>
+
+    <!-- 👉 slot table-->
+    <slot name="table" v-bind="{ items: workingItem.data, reload }">
+      <data-table
+        no-data-text="Không có dữ liệu"
+        v-model:select="selected"
+        v-bind="$attrs"
+        :headers="props.headers"
+        :items="workingItem.data"
+        :loading="loading"
+        @update:sortBy="sortList($event)"
+        @click:row="onClickRow"
+      >
+        <template v-for="(_, name) in $slots" #[name]="slotProps">
+          <slot
+            v-if="!['bottom'].some((x) => x == name)"
+            v-bind="slotProps || {}"
+            :name="name"
+          />
+        </template>
+        <template #item.actions="{ item }">
+          <div class="d-flex justify-center">
+            <!-- 👉 slot action prepend-->
+            <slot name="actionTablePrepend" v-bind="{ reload, item }" />
+
+            <!-- 👉 slot edit-->
+            <slot name="actionEdit" v-bind="{ reload, item }">
+              <app-add-or-edit-dialog
+                width="600"
+                v-bind="$props.updateDialog"
+                :service="services.update"
+                :reload="reload"
+              >
+                <template #actionDialogMid="{ isActive, clearData }">
+                  <!-- 👉 slot action Dialog Mid-->
+                  <slot
+                    name="actionDialogMid"
+                    v-bind="{ isActive, clearData, reload }"
+                  />
+                </template>
+
+                <template #activator="props">
+                  <TableBtn
+                    icon="tabler-edit"
+                    tooltip="Sửa"
+                    v-bind="props"
+                    :id="'id-edit-' + item.raw?.id"
+                  />
+                </template>
+                <template #form="{ data }">
+                  <!-- 👉 slot edit Form-->
+                  <slot name="addOrEditForm" v-bind="{ item, data }" />
+                </template>
+              </app-add-or-edit-dialog>
+            </slot>
+
+            <!-- 👉 slot action center-->
+            <slot name="actionTableCenter" v-bind="{ reload, item }" />
+
+            <!-- 👉 slot action Delete-->
+            <slot name="actionDelete" v-bind="{ reload, item }">
+              <TableBtn icon="tabler-trash" tooltip="Xóa" />
+              <ConfirmPopup
+                ref="deletePopup"
+                activator="parent"
+                :title="props.deleteDialog?.title"
+                :delete="true"
+                @on-confirmed="onDeleteClicked(item.raw.id)"
+              >
+                <template #content>
+                  <div>
+                    <!-- 👉 slot content Delete-->
+                    <slot name="contentDelete" v-bind="{ item }" />
+                  </div>
+                </template>
+              </ConfirmPopup>
+            </slot>
+
+            <!-- 👉 slot action append-->
+            <slot name="actionTableAppend" v-bind="{ reload, item }" />
+          </div>
+        </template>
+        <template #bottom>
+          <div></div>
+        </template>
+      </data-table>
+    </slot>
+
+    <!-- 👉 slot bottom-->
+    <slot name="bottom" v-if="workingItem.data?.length">
+      <pagination
+        :total-item="workingItem.totalItems"
+        :page-index="workingItem.pageNo"
+        :page-size="workingItem.pageSize"
+        @page-index="(val) => (workingItem.pageNo = val)"
+      />
+    </slot>
+  </v-card>
+  <!-- 👉 slot navigation-->
+  <slot name="navigation">
+    <v-navigation-drawer
+      v-model="drawer.show"
+      location="end"
+      temporary
+      width="530"
+    >
+      <template style="min-height: 100vh" class="d-flex flex-column">
+        <div class="w-100 d-flex flex-row-reverse">
+          <dialog-close-btn class="ma-4" @click="onCloseNavigationClick" />
+        </div>
+
+        <!-- 👉 slot navigationForm-->
+        <slot name="navigationForm" v-bind="{ navigationItem }" />
+
+        <!-- 👉 slot navigationAction-->
+        <slot name="navigationAction" v-bind="{ navigationItem }">
+          <div :class="'ma-8 d-flex flex-row-reverse'">
+            <v-btn
+              class="me-4 me-sm-0"
+              variant="outlined"
+              prepend-icon="tabler-edit"
+              color="#817D8D"
+              @click="onClickEditNavigation"
+            >
+              Chỉnh sửa
+            </v-btn>
+          </div>
+        </slot>
+      </template>
+    </v-navigation-drawer>
+  </slot>
 </template>
 
 <style lang="scss" scoped>
@@ -188,17 +408,18 @@ const onDeleteClicked = async (id: number) => {
 }
 
 .v-table.v-table--hover > .v-table__wrapper > table > tbody > tr:hover td {
-  background: rgba(210, 122, 18, 0.10)
+  background: rgba(210, 122, 18, 0.1);
 }
 
 :deep(.v-data-table-header__content) {
   justify-content: unset !important;
 }
 
-:deep(.v-data-table__td.v-data-table-column--align-center.v-data-table__th.v-data-table__th) {
+:deep(
+    .v-data-table__td.v-data-table-column--align-center.v-data-table__th.v-data-table__th
+  ) {
   .v-data-table-header__content {
     justify-content: center !important;
   }
 }
-
 </style>
