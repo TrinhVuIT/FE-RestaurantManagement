@@ -188,7 +188,7 @@ const onDeleteClicked = async (id: number) => {
 
 <template>
   <v-card>
-    <div class="bavang-title px-6 pt-6">
+    <div class="management-title px-6 pt-6">
       {{ titleTable }}
     </div>
 

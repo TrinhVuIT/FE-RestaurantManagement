@@ -8,7 +8,6 @@ import authV2LoginIllustrationDark from "@images/pages/auth-v2-login-illustratio
 import authV2LoginIllustrationLight from "@images/pages/auth-v2-login-illustration-light.png";
 import authV2MaskDark from "@images/pages/misc-mask-dark.png";
 import authV2MaskLight from "@images/pages/misc-mask-light.png";
-import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { themeConfig } from "@themeConfig";
 import LoginService from "@/services/AuthServices";
 import { useToast } from "vue-toastification";
@@ -120,8 +119,6 @@ onMounted(() => {
     >
       <VCard flat :max-width="500" class="mt-12 mt-sm-0 pa-4">
         <VCardText>
-          <VNodeRenderer :nodes="themeConfig.app.logo" class="mb-6" />
-
           <h5 class="text-h5 mb-1">
             Welcome to
             <span class="text-capitalize"> {{ themeConfig.app.title }} </span>
