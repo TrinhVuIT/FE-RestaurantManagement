@@ -12,9 +12,9 @@ interface IWorkingItem {
   totalPages: number;
   data: any[];
   sortBy?: {
-    key: string,
-    order: string
-  }[],
+    key: string;
+    order: string;
+  }[];
 }
 
 interface IDataTableHeader {
@@ -195,11 +195,11 @@ const onDeleteClicked = async (id: number) => {
     <!-- 👉 slot top-->
     <slot name="top">
       <v-row class="mx-3 my-2">
-        <v-col cols="12" md="10">
+        <v-col cols="6">
           <v-row>
             <!-- 👉 slot filter top-->
             <slot name="filterTop" v-bind="{ reload }">
-              <v-col cols="12" sm="3">
+              <v-col cols="6">
                 <AppTextField
                   prepend-inner-icon="tabler-search"
                   clearable
@@ -218,7 +218,7 @@ const onDeleteClicked = async (id: number) => {
             <v-spacer />
           </v-row>
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="6" >
           <!-- 👉 slot action Top-->
           <slot name="actionTop" v-bind="{ reload }">
             <div class="d-flex justify-end gap-x-2 gap-y-3">

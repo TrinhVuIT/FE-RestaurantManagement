@@ -9,13 +9,21 @@
     :update-dialog="updateDialog"
   >
     <template #actionDelete><div></div></template>
-    <template #addOrEditForm?="{ item, data }"> </template>
+    <template #addOrEditForm="{ item, data }">
+      <form-food
+        :data="data"
+        :id="item.raw?.id"
+        :input-label="inputLabel"
+        :get-by-id-service="services.get"
+      />
+    </template>
   </app-data-table>
 </template>
 <script setup lang="ts">
 import { ref, Ref } from "vue";
 import { useRoute } from "vue-router";
 import FoodSerVice from "@/services/FoodService";
+import FormFood from "@/pageComponents/thucdon/components/formFood.vue";
 import {
   IPagedFoodRequest,
   ICreateRequest,
@@ -30,6 +38,7 @@ const headers = [
   { title: "Tên món ăn", key: "foodName", sortable: false },
   { title: "Ngày Tạo", key: "ngayTao", sortable: true },
   { title: "Mô tả", key: "foodDescription", sortable: false },
+  { title: "Hành động", key: "actions", sortable: false },
 ];
 const createDialog = {
   title: "Thêm mới món ăn",
@@ -40,11 +49,26 @@ const createDialog = {
   messageError: "Thêm mới không thành công",
 };
 const updateDialog = {
-  title: "Cập nhật thực đơn",
+  title: "Cập nhật món ăn",
   actionOk: "Lưu",
   actionCancel: "Hủy",
-  massegeSuccess: "Cập nhật thực đơn thành công",
+  massegeSuccess: "Cập nhật món ăn thành công",
   massegeError: "Tên món ăn đã tồn tại",
+};
+
+const inputLabel = {
+  foodName: {
+    label: "Tên món",
+    palceholder: "",
+  },
+  foodDescription: {
+    label: "Mô tả",
+    placeholder: "",
+  },
+  foodPrice: {
+    label: "Giá",
+    palaceholder: "",
+  },
 };
 
 const services = {

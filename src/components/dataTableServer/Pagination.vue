@@ -18,7 +18,6 @@
           :length="totalPages"
           :total-visible="mobile ? 2 : 5"
           @update:modelValue="onChangePageIndex"
-          active-color="#D27A12"
         >
           <template v-slot:next>
             <VBtn

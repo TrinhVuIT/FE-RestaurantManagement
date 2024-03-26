@@ -13,3 +13,14 @@ export interface IUpdateRequest {
   foodDescription: string;
   foodPrice: number;
 }
+
+export interface IInput {
+  label: string;
+  placehoder: string;
+}
+
+export interface IInputObject {
+  foodName: IInput;
+  foodDescription: IInput;
+  foodPrice: IInput;
+}
