@@ -1,6 +1,7 @@
 import type { VerticalNavItems } from "@/@layouts/types";
 
 const PATH_PREFIX = "/trangchu";
+const PATH_MENU = "/thucdon";
 
 export default [
   {
@@ -10,7 +11,7 @@ export default [
   },
   {
     title: "Thực Đơn",
-    to: { path: `${PATH_PREFIX}/bieudopage` },
+    to: { path: `${PATH_MENU}` },
     icon: { icon: "tabler-file-description" },
   },
   {

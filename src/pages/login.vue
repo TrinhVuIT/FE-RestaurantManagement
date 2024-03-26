@@ -63,7 +63,7 @@ const onSubmitClicked = async () => {
       localStorage.removeItem("cvrememberme");
     }
 
-    router.push({ path: "/admin/bieudopage" });
+    router.push({ path: "/trangchu/bieudopage" });
   } else {
     toast.error("Login unsuccessful. Please try again");
   }

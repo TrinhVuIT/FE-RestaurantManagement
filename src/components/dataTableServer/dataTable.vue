@@ -31,14 +31,13 @@
         v-model="selected"
         v-else
         :value="item.raw.id"
-        @click="(e) => onClickCheckbox(e, isSelected, item.raw.id)"
+        @click="(e: any) => onClickCheckbox(e, isSelected, item.raw.id)"
       />
     </template>
   </v-data-table>
 </template>
-vuetify/lib/labs/VDataTable
 <script setup lang="ts">
-import { VDataTable } from "vuetify/lib/labs/VDataTable";
+import {VDataTable} from "vuetify/labs/VDataTable";
 import { ref, useAttrs, watchEffect } from "vue";
 
 defineProps<{
@@ -85,6 +84,6 @@ const onClickCheckbox = (event: any, isSelected: Function, id: number) => {
 
 <style scoped>
 :deep(.v-data-table-header__content) {
-  justify-content: unset !important;
+  justify-content: unset!important;
 }
 </style>

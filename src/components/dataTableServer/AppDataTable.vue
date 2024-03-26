@@ -12,9 +12,9 @@ interface IWorkingItem {
   totalPages: number;
   data: any[];
   sortBy?: {
-    key: string;
-    order: string;
-  }[];
+    key: string,
+    order: string
+  }[],
 }
 
 interface IDataTableHeader {
