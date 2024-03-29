@@ -16,7 +16,7 @@ export interface IUpdateRequest {
 
 export interface IInput {
   label: string;
-  placehoder: string;
+  placeholder: string;
 }
 
 export interface IInputObject {

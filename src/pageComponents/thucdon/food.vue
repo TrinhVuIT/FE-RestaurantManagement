@@ -1,12 +1,13 @@
 <template>
   <app-data-table
     click-row
-    title-table="Quản lý món ăn"
+    title-table="QUẢN LÝ MÓN ĂN"
     placeholder-search="Tìm tên món ăn"
     :headers="headers"
     :services="services"
     :create-dialog="createDialog"
     :update-dialog="updateDialog"
+    :loading="loading"
   >
     <template #actionDelete><div></div></template>
     <template #addOrEditForm="{ item, data }">
@@ -59,15 +60,15 @@ const updateDialog = {
 const inputLabel = {
   foodName: {
     label: "Tên món",
-    palceholder: "",
+    placeholder: "Nhập tên món",
   },
   foodDescription: {
     label: "Mô tả",
-    placeholder: "",
+    placeholder: "Nhập mô tả",
   },
   foodPrice: {
     label: "Giá",
-    palaceholder: "",
+    placeholder: "Nhập giá món ăn",
   },
 };
 

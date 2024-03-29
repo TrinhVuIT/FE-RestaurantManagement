@@ -9,7 +9,7 @@ const GetPaged = async (param: any) => {
 
 const GetById = async (id: number) => {
   const res = await axios.get(`${CONTROLLER_NAME}/GetById?id=${id}`);
-  res.data;
+  return res.data;
 };
 
 const CreateNew = async (param: any) => {

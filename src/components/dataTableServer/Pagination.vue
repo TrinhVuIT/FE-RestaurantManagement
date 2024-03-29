@@ -1,17 +1,17 @@
 <template>
   <VDivider></VDivider>
   <v-card v-if="props.totalItem" id="pagination">
-    <v-row >
+    <v-row>
       <v-col
         v-if="count"
         class="d-flex align-self-center pl-6 py-3"
-        :class="mobile ? 'justify-center mt-2' : 'justify-start'"
+        :class="mobile ? 'mt-2' : 'justify-start'"
       >
         {{ countPage }}
       </v-col>
-      <v-col 
+      <v-col
         class="d-flex justify-end align-self-center py-3"
-        :class="mobile ? 'justify-center' : 'justify-end pr-6'"
+        :class="mobile ? '' : 'justify-end pr-6'"
       >
         <v-pagination
           v-model="pageIndex"
@@ -29,11 +29,7 @@
             </VBtn>
           </template>
           <template v-slot:prev>
-            <VBtn
-              variant="tonal"
-              @click="prevPage"
-              :disabled="pageIndex === 1"
-            >
+            <VBtn variant="tonal" @click="prevPage" :disabled="pageIndex === 1">
               Trước
             </VBtn>
           </template>
@@ -44,26 +40,26 @@
 </template>
 
 <script lang="ts" setup>
-import {watch} from "vue";
+import { watch } from "vue";
 import { useDisplay } from "vuetify";
 
-const pageIndex = ref(1)
+const pageIndex = ref(1);
 interface PropsType {
-  totalItem: number
-  pageSize?: number
-  pageIndex?: number
-  count?: boolean
+  totalItem: number;
+  pageSize?: number;
+  pageIndex?: number;
+  count?: boolean;
 }
 
 const emits = defineEmits(["pageIndex"]);
-const { mobile } = useDisplay()
+const { mobile } = useDisplay();
 
 const props = withDefaults(defineProps<PropsType>(), {
   totalItem: 0,
   pageSize: 10,
   pageIndex: 1,
   count: true,
-})
+});
 
 watch(
   () => props.pageIndex,
@@ -74,8 +70,8 @@ watch(
 
 const totalPages = computed(() => {
   const pages = Math.ceil(props.totalItem / props.pageSize);
-  return pages
-})
+  return pages;
+});
 
 const countPage = computed(() => {
   const total = props.totalItem;
@@ -85,22 +81,22 @@ const countPage = computed(() => {
 });
 
 const nextPage = () => {
-  pageIndex.value++
+  pageIndex.value++;
   emits("pageIndex", pageIndex.value);
-}
+};
 
 const prevPage = () => {
-  pageIndex.value--
+  pageIndex.value--;
   emits("pageIndex", pageIndex.value);
-}
+};
 
 const onChangePageIndex = () => {
   emits("pageIndex", pageIndex.value);
-}
+};
 
 onMounted(() => {
   pageIndex.value = props.pageIndex;
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -114,15 +110,21 @@ onMounted(() => {
 
   :deep(.v-pagination__prev) {
     button {
-      background: var(--light-opacity-color-gray-gray-8, rgba(75, 70, 92, 0.08)) !important;
-      color: inherit !important
+      background: var(
+        --light-opacity-color-gray-gray-8,
+        rgba(75, 70, 92, 0.08)
+      ) !important;
+      color: inherit !important;
     }
   }
 
   :deep(.v-pagination__next) {
     button {
-      background: var(--light-opacity-color-gray-gray-8, rgba(75, 70, 92, 0.08)) !important;
-      color: inherit !important
+      background: var(
+        --light-opacity-color-gray-gray-8,
+        rgba(75, 70, 92, 0.08)
+      ) !important;
+      color: inherit !important;
     }
   }
 }

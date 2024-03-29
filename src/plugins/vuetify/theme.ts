@@ -37,6 +37,7 @@ const theme: VuetifyOptions['theme'] = {
         'perfect-scrollbar-thumb': '#DBDADE',
         'skin-bordered-background': '#fff',
         'skin-bordered-surface': '#fff',
+        'text-color-01': "#333"
       },
 
       variables: {
